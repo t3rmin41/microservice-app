@@ -6,13 +6,14 @@ spring:
 
 eureka:
     instance:
+        #hostname: ${spring.application.name}
         leaseRenewalIntervalInSeconds: 10
-        metadataMap:
-            instanceId: ${spring.serviceInstanceId}
     client:
         serviceUrl:
             defaultZone: http://127.0.0.1:8761/eureka/
-        
+        healthcheck:
+            enabled: true
+
 ---
 
 spring:
