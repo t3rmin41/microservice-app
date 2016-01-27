@@ -29,4 +29,5 @@ public class MyApp {
         config.getMetadataMap().put("instanceId", singletonUUID.getUUID().toString()); // set UUID to observe in Eureka
         return config;
     }
+    /**/
 }

@@ -90,15 +90,15 @@
 
     <!--DEVELOPMENT logger-->
     <springProfile name="local-dev">
-        <logger name="com.simple.service.app">
+        <logger name="com.simple.service.app" additivity="false">
             <appender-ref ref="SIFTDEPLOYLOG" />
             <appender-ref ref="simpleConsole" />
         </logger>
-        <logger name="com.simple.service.controller">
+        <logger name="com.simple.service.controller" additivity="false">
             <appender-ref ref="SIFTCONTROLLERLOG" />
             <appender-ref ref="simpleConsole" />
         </logger>
-        <logger name="com.simple.service.service" >
+        <logger name="com.simple.service.service" additivity="false">
             <appender-ref ref="SIFTSERVICELOG" />
             <appender-ref ref="simpleConsole"/>
         </logger>
