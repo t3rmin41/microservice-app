@@ -7,7 +7,7 @@ spring:
 eureka:
     instance:
         hostname: ${host.instance.name}
-        nonSecurePort: 0
+        nonSecurePort: ${server.port}
         leaseRenewalIntervalInSeconds: 10
     client:
         serviceUrl:
@@ -22,8 +22,12 @@ spring:
 host:
     instance:
         name: localhost
+server:
+    port: 0
 
 ---
 
 spring:
     profiles: prod
+server:
+    port: 8080
