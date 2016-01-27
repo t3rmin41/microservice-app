@@ -2,6 +2,7 @@ package com.simple.service.app;
 
 import java.util.UUID;
 
+import org.slf4j.MDC;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -18,6 +19,8 @@ public class MyApp {
     private static final UUID serviceInstanceId = UUID.randomUUID();
     
     public static void main(String[] args) {
+        MDC.put("serviceInstanceId", serviceInstanceId.toString());
+        System.setProperty("spring.serviceInstanceId", serviceInstanceId.toString());
         ApplicationContext context = SpringApplication.run(MyApp.class, args);
     }
 }

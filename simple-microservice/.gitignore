@@ -6,3 +6,5 @@
 .gradle/
 build/
 /bin/
+#Common
+log/
