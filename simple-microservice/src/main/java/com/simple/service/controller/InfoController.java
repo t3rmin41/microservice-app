@@ -16,6 +16,7 @@ public class InfoController {
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String info() {
         log.info("Requested URL : /info");
+        log.info("Application UUID : " + System.getProperty("spring.serviceInstanceId"));
         return "This is simple service serving cars";
     }
 }
