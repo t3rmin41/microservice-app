@@ -4,6 +4,10 @@ spring:
     profiles:
         active: local-dev
 
+---
+
+spring:
+    profiles: local-dev
 eureka:
     instance:
         hostname: ${host.instance.name}
@@ -14,11 +18,6 @@ eureka:
             defaultZone: http://127.0.0.1:8761/eureka/
         healthcheck:
             enabled: true
-
----
-
-spring:
-    profiles: local-dev
 host:
     instance:
         name: localhost
@@ -29,5 +28,14 @@ server:
 
 spring:
     profiles: prod
+eureka:
+    instance:
+        nonSecurePort: ${server.port}
+        leaseRenewalIntervalInSeconds: 10
+    client:
+        serviceUrl:
+            defaultZone: http://127.0.0.1:8761/eureka/
+        healthcheck:
+            enabled: true
 server:
     port: 8080
