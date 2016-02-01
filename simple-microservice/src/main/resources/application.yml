@@ -1,8 +1,12 @@
 spring:
+    main:
+        show_banner: off
     application:
         name: simple-service
     profiles:
         active: local-dev
+#logging:
+#    level.org.springframework: OFF
 
 ---
 

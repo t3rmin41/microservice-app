@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+
+    <property name="LocalDevLogLevel" value="INFO" />
+    <property name="ProdLogLevel" value="WARN" />
     <property name="log-dir" value="simple-service-log" />
     
     <property name="COMMON_LOG_PATTERN" value="%-30([%thread]) %-5level - %logger{32} - %msg%n"/>
@@ -8,6 +11,32 @@
         <encoder>
             <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS 'UTC'", UTC} ${COMMON_LOG_PATTERN}</pattern>
         </encoder>
+    </appender>
+
+    <appender name="SIFTSYSLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <key>serviceInstanceId</key>
+            <defaultValue>default</defaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>./${log-dir}/${serviceInstanceId}/sys.log</file>
+                <append>false</append>
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS 'UTC'", UTC} ${COMMON_LOG_PATTERN}</pattern>
+                </layout>
+                
+                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                    <FileNamePattern>./${log-dir}/${serviceInstanceId}/sys.%i.log.zip</FileNamePattern>
+                    <MinIndex>1</MinIndex>
+                    <MaxIndex>10</MaxIndex>
+                </rollingPolicy>
+ 
+                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </triggeringPolicy>
+            </appender>
+        </sift>
     </appender>
 
     <appender name="SIFTDEPLOYLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
@@ -91,6 +120,7 @@
     <!--DEVELOPMENT logger-->
     <springProfile name="local-dev">
         <logger name="com.simple.service.app" additivity="false">
+            <appender-ref ref="SIFTSYSLOG" />
             <appender-ref ref="SIFTDEPLOYLOG" />
             <appender-ref ref="simpleConsole" />
         </logger>
@@ -102,7 +132,7 @@
             <appender-ref ref="SIFTSERVICELOG" />
             <appender-ref ref="simpleConsole"/>
         </logger>
-        <root level="INFO" additivity="false">
+        <root level="${LocalDevLogLevel}" additivity="false">
             <appender-ref ref="SIFTDEPLOYLOG" />
             <appender-ref ref="simpleConsole" />
         </root>
@@ -122,7 +152,7 @@
             <appender-ref ref="SIFTSERVICELOG" />
             <appender-ref ref="simpleConsole"/>
         </logger>
-        <root level="WARN" additivity="false">
+        <root level="${ProdLogLevel}" additivity="false">
             <appender-ref ref="SIFTDEPLOYLOG" />
             <appender-ref ref="simpleConsole" />
         </root>
