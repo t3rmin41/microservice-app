@@ -3,14 +3,12 @@ package com.simple.composite.client;
 import java.util.List;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.simple.entity.vehicle.Car;
 
-//@Component
 @FeignClient(value = "car-service")
 public interface CarClient {
 

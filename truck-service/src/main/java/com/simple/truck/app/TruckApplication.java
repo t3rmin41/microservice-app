@@ -25,6 +25,7 @@ public class TruckApplication {
     public static void main(String[] args) {
         log.warn("Starting truck service with UUID " + singletonUUID.getUUID().toString());
         ApplicationContext context = SpringApplication.run(TruckApplication.class, args);
+        log.info("Application context ID : " + context.getId());
     }
 
     @Bean

@@ -16,10 +16,10 @@ import com.simple.composite.client.TruckClient;
 @Component
 public class VehicleService {
     
-    //@Inject
+    @Inject
     private TruckClient truckClient;
     
-    //@Inject
+    @Inject
     private CarClient carClient;
     
     public VehicleSummary getAllVehicles() {
