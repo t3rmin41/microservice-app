@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+jar {
+    baseName = 'vehicle-entity'
+    version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        // Can't find spring-cloud-build in maven central...
+        url 'http://maven.springframework.org/release'
+    }
+}
+
+configurations.all {
+   exclude group: "commons-logging", module: "commons-logging"
+}
+
+dependencies {
+    //1. Logback
+    compile ("ch.qos.logback:logback-classic:1.+")
+}
