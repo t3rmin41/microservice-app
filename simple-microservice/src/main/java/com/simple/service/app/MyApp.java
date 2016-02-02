@@ -22,7 +22,7 @@ public class MyApp {
     private static SingletonUUID singletonUUID = SingletonUUID.getInstance();
     
     public static void main(String[] args) {
-        log.info("Starting service with UUID " + singletonUUID.getUUID().toString());
+        log.info("Starting service with  UUID " + singletonUUID.getUUID().toString());
         ApplicationContext context = SpringApplication.run(MyApp.class, args);
     }
 
