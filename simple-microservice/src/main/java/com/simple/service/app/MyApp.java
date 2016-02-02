@@ -1,6 +1,7 @@
 package com.simple.service.app;
 
-import org.slf4j.MDC;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -16,10 +17,12 @@ import com.simple.service.config.MyAppConfig;
 @Import({MyAppConfig.class})
 public class MyApp {
 
+    private static Logger log = LoggerFactory.getLogger(MyApp.class);
+    
     private static SingletonUUID singletonUUID = SingletonUUID.getInstance();
     
     public static void main(String[] args) {
-        //MDC.put("serviceInstanceId", singletonUUID.getUUID().toString()); // set UUID for log directory
+        log.info("Starting service with UUID " + singletonUUID.getUUID().toString());
         ApplicationContext context = SpringApplication.run(MyApp.class, args);
     }
 
