@@ -19,7 +19,7 @@ public class MyApp {
     private static SingletonUUID singletonUUID = SingletonUUID.getInstance();
     
     public static void main(String[] args) {
-        MDC.put("serviceInstanceId", singletonUUID.getUUID().toString()); // set UUID for log directory
+        //MDC.put("serviceInstanceId", singletonUUID.getUUID().toString()); // set UUID for log directory
         ApplicationContext context = SpringApplication.run(MyApp.class, args);
     }
 
