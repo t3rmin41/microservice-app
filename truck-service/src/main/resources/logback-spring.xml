@@ -132,15 +132,20 @@
 
     <!--PRODUCTION logger-->
     <springProfile name="prod">
-        <logger name="com.simple.service.app">
+        <logger name="com.simple.truck.app" additivity="false">
+            <appender-ref ref="SIFTSYSLOG" />
             <appender-ref ref="SIFTDEPLOYLOG" />
             <appender-ref ref="simpleConsole" />
         </logger>
-        <logger name="com.simple.service.controller">
+        <logger name="com.simple.truck.controller" additivity="false">
             <appender-ref ref="SIFTCONTROLLERLOG" />
             <appender-ref ref="simpleConsole" />
         </logger>
-        <logger name="com.simple.service.service" >
+        <logger name="com.simple.truck.service" additivity="false">
+            <appender-ref ref="SIFTSERVICELOG" />
+            <appender-ref ref="simpleConsole"/>
+        </logger>
+        <logger name="com.simple.truck.repository" additivity="false">
             <appender-ref ref="SIFTSERVICELOG" />
             <appender-ref ref="simpleConsole"/>
         </logger>
