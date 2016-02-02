@@ -14,10 +14,7 @@
     </appender>
 
     <appender name="SIFTSYSLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>serviceInstanceId</key>
-            <defaultValue>default</defaultValue>
-        </discriminator>
+        <discriminator class="com.simple.service.app.UniqueIdDiscriminator" />
         <sift>
             <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>./${log-dir}/${serviceInstanceId}/sys.log</file>
@@ -40,10 +37,7 @@
     </appender>
 
     <appender name="SIFTDEPLOYLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>serviceInstanceId</key>
-            <defaultValue>default</defaultValue>
-        </discriminator>
+        <discriminator class="com.simple.service.app.UniqueIdDiscriminator" />
         <sift>
             <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>./${log-dir}/${serviceInstanceId}/deploy.log</file>
@@ -66,10 +60,7 @@
     </appender>
 
     <appender name="SIFTCONTROLLERLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>serviceInstanceId</key>
-            <defaultValue>default</defaultValue>
-        </discriminator>
+        <discriminator class="com.simple.service.app.UniqueIdDiscriminator" />
         <sift>
             <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>./${log-dir}/${serviceInstanceId}/controller.log</file>
@@ -92,10 +83,7 @@
     </appender>
 
     <appender name="SIFTSERVICELOG" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator>
-            <key>serviceInstanceId</key>
-            <defaultValue>default</defaultValue>
-        </discriminator>
+        <discriminator class="com.simple.service.app.UniqueIdDiscriminator" />
         <sift>
             <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>./${log-dir}/${serviceInstanceId}/service.log</file>
