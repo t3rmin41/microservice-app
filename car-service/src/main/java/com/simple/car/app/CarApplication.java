@@ -25,6 +25,7 @@ public class CarApplication {
     public static void main(String[] args) {
         log.warn("Starting car service with UUID " + singletonUUID.getUUID().toString());
         ApplicationContext context = SpringApplication.run(CarApplication.class, args);
+        log.warn("Application context ID : " + context.getId());
     }
 
     @Bean
