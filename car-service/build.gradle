@@ -1,0 +1,53 @@
+buildscript {
+    ext {
+        springBootVersion = '1.3.1.RELEASE'
+    }
+    repositories {
+        flatDir {
+            dirs '../vehicle-entity/bin'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+apply plugin: 'maven-publish'
+
+jar {
+    baseName = 'car-service'
+    version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    maven {
+        // Can't find spring-cloud-build in maven central...
+        url 'http://maven.springframework.org/release'
+    }
+}
+
+configurations.all {
+   exclude group: "commons-logging", module: "commons-logging"
+}
+
+dependencies {
+    //
+    compile project("vehicle-entity")
+    //
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compile("org.springframework.cloud:spring-cloud-starter-eureka:1.0.3.RELEASE")
+    compile("javax.inject:javax.inject:1")
+    //3. Logback
+    compile ("ch.qos.logback:logback-classic:1.+")
+    
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
