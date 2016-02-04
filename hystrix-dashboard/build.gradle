@@ -36,7 +36,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-actuator")
     
-    compile ("org.springframework.cloud:spring-cloud-starter-hystrix:${hystrixVersion}")
+    compile ("org.springframework.cloud:spring-cloud-starter-hystrix:${hystrixVersion}") {
+        exclude module: 'com.netflix.archaius:archaius-core'
+    }
     compile ("org.springframework.cloud:spring-cloud-starter-hystrix-dashboard:${hystrixVersion}") {
         exclude module: 'com.netflix.archaius:archaius-core'
     }
