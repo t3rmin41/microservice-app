@@ -8,3 +8,5 @@ build/
 /bin/
 #Common
 *log/
+#Spring beans
+.springBeans
