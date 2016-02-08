@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.simple.composite.service.VehicleService;
-import com.simple.entity.response.VehicleSummary;
+import com.simple.entity.response.Summary;
+import com.simple.entity.response.VehicleResponse;
 
 @EnableHystrix
 @Controller
@@ -30,13 +31,16 @@ public class VehicleController {
             }
             )
     @RequestMapping(value = "/vehicles", method = RequestMethod.GET)
-    public VehicleSummary getAllVehicles() {
-        return vehicleService.getAllVehicles();
+    public VehicleResponse<Summary> getAllVehicles() {
+        VehicleResponse<Summary> response = new VehicleResponse<Summary>();
+        Summary summary = vehicleService.getAllVehicles();
+        response.setEntity(summary);
+        return response;
     }
 
     @HystrixCommand
-    private VehicleSummary errorFallback() {
-        VehicleSummary response = new VehicleSummary();
+    private VehicleResponse<Summary> errorFallback() {
+        VehicleResponse<Summary> response = new VehicleResponse<Summary>();
         response.getErrors().add("Error getting vehicles");
         return response;
     }

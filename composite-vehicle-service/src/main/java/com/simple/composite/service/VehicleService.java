@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import com.simple.entity.response.VehicleSummary;
+import com.simple.entity.response.Summary;
 import com.simple.entity.vehicle.Car;
 import com.simple.entity.vehicle.Truck;
 import com.simple.composite.client.CarClient;
@@ -27,12 +27,12 @@ public class VehicleService {
     @Inject
     private RestTemplate restTemplate;
     
-    public VehicleSummary getAllVehicles() {
+    public Summary getAllVehicles() {
         
-        List<Car> cars = carClient.getAllCars();
-        List<Truck> trucks = truckClient.getTrucks();
+        List<Car> cars = carClient.getAllCars().getEntity();
+        List<Truck> trucks = truckClient.getTrucks().getEntity();
         
-        VehicleSummary summary = new VehicleSummary();
+        Summary summary = new Summary();
         
         summary.getCars().addAll(cars); // since we ensured that getCars() won't return null,
         // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'  

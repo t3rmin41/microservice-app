@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.simple.car.service.CarService;
+import com.simple.entity.response.VehicleResponse;
 import com.simple.entity.vehicle.Car;
 
 @Controller
@@ -21,13 +22,19 @@ public class CarController {
 
     @ResponseBody
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
-    public List<Car> getCars() {
-        return carService.getAllCars();
+    public VehicleResponse<List<Car>> getCars() {
+        VehicleResponse<List<Car>> response = new VehicleResponse<List<Car>>();
+        List<Car> cars = carService.getAllCars();
+        response.setEntity(cars);
+        return response;
     }
 
     @ResponseBody
     @RequestMapping(value = "/cars/{carId}", method = RequestMethod.GET)
-    public Car getCarById(@PathVariable("carId") Long carId) {
-        return carService.getCarById(carId);
+    public VehicleResponse<Car> getCarById(@PathVariable("carId") Long carId) {
+        VehicleResponse<Car> response = new VehicleResponse<Car>();
+        Car car = carService.getCarById(carId);
+        response.setEntity(car);
+        return response;
     }
 }
