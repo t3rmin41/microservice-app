@@ -11,11 +11,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
 import com.simple.entity.app.SingletonUUID;
+import com.simple.truck.config.HystrixConfig;
 import com.simple.truck.config.TruckConfig;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@Import({TruckConfig.class})
+@Import({TruckConfig.class, HystrixConfig.class})
 public class TruckApplication {
 
     private static Logger log = LoggerFactory.getLogger(TruckApplication.class);

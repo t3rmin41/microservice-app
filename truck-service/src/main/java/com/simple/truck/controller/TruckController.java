@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.simple.entity.response.VehicleResponse;
 import com.simple.entity.vehicle.Truck;
+import com.simple.truck.command.TruckCommand;
 import com.simple.truck.service.TruckService;
 
 @Controller
@@ -27,7 +28,9 @@ public class TruckController {
         VehicleResponse<List<Truck>> response = new VehicleResponse<List<Truck>>();
         List<Truck> trucks = truckService.getAllTrucks();
         response.setEntity(trucks);
-        return response;
+        
+        VehicleResponse<List<Truck>> responseT = (VehicleResponse<List<Truck>>) new TruckCommand(response).execute();
+        return responseT;
     }
     
     @ResponseBody
