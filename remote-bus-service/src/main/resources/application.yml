@@ -1,0 +1,5 @@
+spring:
+    application:
+        name: remote-bus-service
+server: 
+    port: 8888

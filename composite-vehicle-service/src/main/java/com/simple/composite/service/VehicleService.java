@@ -5,22 +5,27 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
 import com.simple.entity.response.VehicleSummary;
 import com.simple.entity.vehicle.Car;
 import com.simple.entity.vehicle.Truck;
-
 import com.simple.composite.client.CarClient;
 import com.simple.composite.client.TruckClient;
 
 @Component
 public class VehicleService {
     
+    private static final String remoteUrl = "http://localhost:8888/buses";
+    
     @Inject
     private TruckClient truckClient;
     
     @Inject
     private CarClient carClient;
+    
+    @Inject
+    private RestTemplate restTemplate;
     
     public VehicleSummary getAllVehicles() {
         
@@ -35,4 +40,5 @@ public class VehicleService {
         
         return summary;
     }
+    
 }
