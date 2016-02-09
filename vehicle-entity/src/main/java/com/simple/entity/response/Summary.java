@@ -7,7 +7,7 @@ import com.simple.entity.vehicle.Bus;
 import com.simple.entity.vehicle.Car;
 import com.simple.entity.vehicle.Truck;
 
-public class Summary extends VehicleResponse {
+public class Summary {
 
     private List<Car> cars = new ArrayList<Car>(); // this way we ensure that 'cars' is not null
     private List<Truck> trucks = new ArrayList<Truck>(); // this way we ensure that 'trucks' is not null

@@ -1,5 +1,6 @@
 package com.simple.composite.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,17 +34,18 @@ public class VehicleService {
         List<Car> cars = carClient.getAllCars().getObject();
         List<Truck> trucks = truckClient.getTrucks().getObject();
         
-        
-        //List<Bus> buses = restTemplate.getForObject(
-        
+        Bus[] busesArray = restTemplate.getForObject(remoteUrl, Bus[].class);
+        List<Bus> buses = Arrays.asList(busesArray);
         
         Summary summary = new Summary();
         
         summary.getCars().addAll(cars); // since we ensured that getCars() won't return null,
         // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'  
         summary.getTrucks().addAll(trucks);
+
+        summary.setBuses(buses);
         
         return summary;
     }
-    
+
 }
