@@ -33,8 +33,7 @@ public class VehicleController {
     @RequestMapping(value = "/vehicles", method = RequestMethod.GET)
     public VehicleResponse<Summary> getAllVehicles() {
         VehicleResponse<Summary> response = new VehicleResponse<Summary>();
-        Summary summary = vehicleService.getAllVehicles();
-        response.setEntity(summary);
+        response.setObject(vehicleService.getAllVehicles());
         return response;
     }
 

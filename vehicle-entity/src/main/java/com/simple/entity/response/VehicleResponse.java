@@ -7,8 +7,8 @@ public class VehicleResponse<T> {
     
     private List<String> errors = new ArrayList<String>();
 
-    private T entity;
-
+    private T object;
+    
     public List<String> getErrors() {
         return errors;
     }
@@ -17,12 +17,12 @@ public class VehicleResponse<T> {
         this.errors = errors;
     }
 
-    public T getEntity() {
-        return entity;
+    public T getObject() {
+        return object;
     }
 
-    public void setEntity(T entity) {
-        this.entity = entity;
+    public void setObject(T object) {
+        this.object = object;
     }
 
 }

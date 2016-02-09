@@ -2,19 +2,18 @@ package com.simple.truck.command;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
-import com.simple.entity.response.VehicleResponse;
 
-public class TruckCommand extends HystrixCommand<VehicleResponse<?>> {
+public class TruckCommand<T> extends HystrixCommand<T> {
 
-    private VehicleResponse<?> response;
+    private T response;
     
-    public TruckCommand(VehicleResponse<?> response) {
+    public TruckCommand(T response) {
         super(HystrixCommandGroupKey.Factory.asKey("TruckGroup"));
         this.response = response;
     }
 
     @Override
-    protected VehicleResponse<?> run() throws Exception {
+    protected T run() throws Exception {
         return this.response;
     }
 

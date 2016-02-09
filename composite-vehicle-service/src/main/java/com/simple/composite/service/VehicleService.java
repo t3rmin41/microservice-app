@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.simple.entity.response.Summary;
+import com.simple.entity.vehicle.Bus;
 import com.simple.entity.vehicle.Car;
 import com.simple.entity.vehicle.Truck;
 import com.simple.composite.client.CarClient;
@@ -29,8 +30,12 @@ public class VehicleService {
     
     public Summary getAllVehicles() {
         
-        List<Car> cars = carClient.getAllCars().getEntity();
-        List<Truck> trucks = truckClient.getTrucks().getEntity();
+        List<Car> cars = carClient.getAllCars().getObject();
+        List<Truck> trucks = truckClient.getTrucks().getObject();
+        
+        
+        //List<Bus> buses = restTemplate.getForObject(
+        
         
         Summary summary = new Summary();
         

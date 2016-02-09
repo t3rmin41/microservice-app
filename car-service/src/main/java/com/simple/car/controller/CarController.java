@@ -24,8 +24,7 @@ public class CarController {
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
     public VehicleResponse<List<Car>> getCars() {
         VehicleResponse<List<Car>> response = new VehicleResponse<List<Car>>();
-        List<Car> cars = carService.getAllCars();
-        response.setEntity(cars);
+        response.setObject(carService.getAllCars());
         return response;
     }
 
@@ -33,8 +32,7 @@ public class CarController {
     @RequestMapping(value = "/cars/{carId}", method = RequestMethod.GET)
     public VehicleResponse<Car> getCarById(@PathVariable("carId") Long carId) {
         VehicleResponse<Car> response = new VehicleResponse<Car>();
-        Car car = carService.getCarById(carId);
-        response.setEntity(car);
+        response.setObject(carService.getCarById(carId));
         return response;
     }
 }

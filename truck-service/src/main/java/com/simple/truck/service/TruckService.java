@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Component;
 
 import com.simple.entity.vehicle.Truck;
+import com.simple.truck.command.TruckCommand;
 import com.simple.truck.repository.TruckRepository;
 
 @Component
@@ -16,10 +17,10 @@ public class TruckService {
     private TruckRepository truckRepo;
     
     public List<Truck> getAllTrucks() {
-        return truckRepo.getAllTrucks();
+        return new TruckCommand<List<Truck>>(truckRepo.getAllTrucks()).execute();
     }
     
     public Truck getTruckById(Long id) {
-        return truckRepo.getTruckById(id);
+        return new TruckCommand<Truck>(truckRepo.getTruckById(id)).execute();
     }
 }
