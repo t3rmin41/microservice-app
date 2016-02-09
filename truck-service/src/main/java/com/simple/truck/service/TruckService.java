@@ -1,6 +1,9 @@
 package com.simple.truck.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import javax.inject.Inject;
 
@@ -17,10 +20,28 @@ public class TruckService {
     private TruckRepository truckRepo;
     
     public List<Truck> getAllTrucks() {
-        return new TruckCommand<List<Truck>>(truckRepo.getAllTrucks()).execute();
+        List<Truck> trucks = new ArrayList<Truck>();
+        try {
+            Future<List<Truck>> future = new TruckCommand<List<Truck>>(truckRepo.getAllTrucks()).queue();
+            trucks = future.get();
+        } catch (ExecutionException ee) {
+            ee.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return trucks;
     }
     
     public Truck getTruckById(Long id) {
-        return new TruckCommand<Truck>(truckRepo.getTruckById(id)).execute();
+        Truck truck = new Truck();
+        try {
+            Future<Truck> future = new TruckCommand<Truck>(truckRepo.getTruckById(id)).queue();
+            truck = future.get();
+        } catch (ExecutionException ee) {
+            ee.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return truck;
     }
 }

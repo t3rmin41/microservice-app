@@ -3,12 +3,14 @@ package com.simple.composite.config;
 import java.util.LinkedHashMap;
 
 import org.springframework.boot.actuate.endpoint.InfoEndpoint;
+import org.springframework.boot.context.embedded.ServletRegistrationBean;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
+import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
 import com.simple.entity.app.SingletonUUID;
 
 @Configuration
@@ -28,5 +30,10 @@ public class CompositeVehicleConfig {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+    
+    @Bean
+    public ServletRegistrationBean hystrixStreamServlet(){
+        return new ServletRegistrationBean(new HystrixMetricsStreamServlet(), "/hystrix.stream");
     }
 }
