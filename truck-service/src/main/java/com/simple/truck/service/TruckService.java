@@ -9,10 +9,13 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
 
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+
 import com.simple.entity.vehicle.Truck;
 import com.simple.truck.command.TruckCommand;
 import com.simple.truck.repository.TruckRepository;
 
+@EnableHystrix
 @Component
 public class TruckService {
 

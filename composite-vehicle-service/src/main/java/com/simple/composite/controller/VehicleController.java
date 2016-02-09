@@ -2,7 +2,6 @@ package com.simple.composite.controller;
 
 import javax.inject.Inject;
 
-import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,7 +11,6 @@ import com.simple.composite.service.VehicleService;
 import com.simple.entity.response.Summary;
 import com.simple.entity.response.VehicleResponse;
 
-@EnableHystrix
 @Controller
 public class VehicleController {
 

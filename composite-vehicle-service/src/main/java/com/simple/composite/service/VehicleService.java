@@ -11,6 +11,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import org.springframework.cloud.netflix.hystrix.EnableHystrix;
+
 import com.simple.entity.response.Summary;
 import com.simple.entity.vehicle.Bus;
 import com.simple.entity.vehicle.Car;
@@ -19,6 +21,7 @@ import com.simple.composite.client.CarClient;
 import com.simple.composite.client.TruckClient;
 import com.simple.composite.command.VehicleCommand;
 
+@EnableHystrix
 @Component
 public class VehicleService {
     
