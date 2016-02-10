@@ -2,13 +2,18 @@ package com.simple.composite.command;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandProperties;
+import com.netflix.hystrix.HystrixCommand.Setter;
 
 public class VehicleCommand<T> extends HystrixCommand<T> {
 
     private T response;
     
-    public VehicleCommand(T response) {
-        super(HystrixCommandGroupKey.Factory.asKey("VehicleGroup"));
+    public VehicleCommand(T response, String groupKey, int timeout) {
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(groupKey))
+                .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
+                        .withExecutionTimeoutInMilliseconds(timeout))
+          );
         this.response = response;
     }
 

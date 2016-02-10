@@ -26,6 +26,9 @@ import com.simple.composite.command.VehicleCommand;
 public class VehicleService {
     
     private static final String remoteUrl = "http://localhost:8888/buses";
+    private static final String errorUrl = "http://localhost:8888/internalErrorUrl";
+    private static final String nonExistingUrl = "http://localhost:8888/internalErrorUrl";
+    private static final String slowUrl = "http://localhost:8888/slowBuses";
     
     @Inject
     private TruckClient truckClient;
@@ -36,26 +39,122 @@ public class VehicleService {
     @Inject
     private RestTemplate restTemplate;
     
-    public Summary getAllVehicles() {
-        Summary summary = new Summary();
+    public Summary getAllVehicles() throws Exception {
         try {
-            Future<List<Car>> carsFuture = new VehicleCommand<List<Car>>(carClient.getAllCars().getObject()).queue();
+            Summary summary = new Summary();
+            
+            Future<Bus[]> busesFutureArr = new VehicleCommand<Bus[]>(restTemplate.getForObject(remoteUrl, Bus[].class), "VehicleGroup", 100).queue();
+            summary.getBuses().addAll(Arrays.asList(busesFutureArr.get()));
+            
+            Future<List<Car>> carsFuture = new VehicleCommand<List<Car>>(carClient.getAllCars().getObject(), "VehicleGroup", 100).queue();
             // since we ensured that getCars() won't return null,
             // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
             summary.getCars().addAll(carsFuture.get());
             
-            Future<List<Truck>> trucksFuture = new VehicleCommand<List<Truck>>(truckClient.getTrucks().getObject()).queue();
+            Future<List<Truck>> trucksFuture = new VehicleCommand<List<Truck>>(truckClient.getTrucks().getObject(), "VehicleGroup", 100).queue();
             summary.getTrucks().addAll(trucksFuture.get());
             
-            Future<Bus[]> busesFutureArr = new VehicleCommand<Bus[]>(restTemplate.getForObject(remoteUrl, Bus[].class)).queue();
-            summary.getBuses().addAll(Arrays.asList(busesFutureArr.get()));
+            return summary;
         } catch (ExecutionException ee) {
             ee.printStackTrace();
+            throw new Exception(ee.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
-        return summary;
+    }
+    
+    public Summary getSlowlyAllVehicles() throws Exception {
+        try {
+            Summary summary = new Summary();
+            
+            Future<Bus[]> busesFutureArr = new VehicleCommand<Bus[]>(restTemplate.getForObject(slowUrl, Bus[].class), "VehicleGroup", 2000).queue();
+            summary.getBuses().addAll(Arrays.asList(busesFutureArr.get()));
+            
+            Future<List<Car>> carsFuture = new VehicleCommand<List<Car>>(carClient.getAllCars().getObject(), "VehicleGroup", 2000).queue();
+            summary.getCars().addAll(carsFuture.get());
+            
+            Future<List<Truck>> trucksFuture = new VehicleCommand<List<Truck>>(truckClient.getTrucks().getObject(), "VehicleGroup", 2000).queue();
+            summary.getTrucks().addAll(trucksFuture.get());
+            
+            return summary;
+        } catch (ExecutionException ee) {
+            ee.printStackTrace();
+            throw new Exception(ee.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+    
+    public Summary getSlowTolerantAllVehicles() throws Exception {
+        try {
+            Summary summary = new Summary();
+            
+            Future<Bus[]> busesFutureArr = new VehicleCommand<Bus[]>(restTemplate.getForObject(slowUrl, Bus[].class), "VehicleGroup", 6000).queue();
+            summary.getBuses().addAll(Arrays.asList(busesFutureArr.get()));
+            
+            Future<List<Car>> carsFuture = new VehicleCommand<List<Car>>(carClient.getAllCars().getObject(), "VehicleGroup", 6000).queue();
+            summary.getCars().addAll(carsFuture.get());
+            
+            Future<List<Truck>> trucksFuture = new VehicleCommand<List<Truck>>(truckClient.getTrucks().getObject(), "VehicleGroup", 6000).queue();
+            summary.getTrucks().addAll(trucksFuture.get());
+            
+            return summary;
+        } catch (ExecutionException ee) {
+            ee.printStackTrace();
+            throw new Exception(ee.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
+    public Summary getRemoteError() throws Exception {
+        try {
+            Summary summary = new Summary();
+
+            Future<Bus[]> busesFutureArr = new VehicleCommand<Bus[]>(restTemplate.getForObject(errorUrl, Bus[].class), "VehicleGroup", 100).queue();
+            summary.getBuses().addAll(Arrays.asList(busesFutureArr.get()));
+            
+            Future<List<Car>> carsFuture = new VehicleCommand<List<Car>>(carClient.getAllCars().getObject(), "VehicleGroup", 100).queue();
+            summary.getCars().addAll(carsFuture.get());
+            
+            Future<List<Truck>> trucksFuture = new VehicleCommand<List<Truck>>(truckClient.getTrucks().getObject(), "VehicleGroup", 100).queue();
+            summary.getTrucks().addAll(trucksFuture.get());
+            
+            return summary;
+        } catch (ExecutionException ee) {
+            ee.printStackTrace();
+            throw new Exception(ee.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
     
+    public Summary getNonExistingUrl() throws Exception {
+        try {
+            Summary summary = new Summary();
+            
+            Future<Bus[]> busesFutureArr = new VehicleCommand<Bus[]>(restTemplate.getForObject(nonExistingUrl, Bus[].class), "VehicleGroup", 100).queue();
+            summary.getBuses().addAll(Arrays.asList(busesFutureArr.get()));
+            
+            Future<List<Car>> carsFuture = new VehicleCommand<List<Car>>(carClient.getAllCars().getObject(), "VehicleGroup", 100).queue();
+            // since we ensured that getCars() won't return null,
+            // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
+            summary.getCars().addAll(carsFuture.get());
+            
+            Future<List<Truck>> trucksFuture = new VehicleCommand<List<Truck>>(truckClient.getTrucks().getObject(), "VehicleGroup", 100).queue();
+            summary.getTrucks().addAll(trucksFuture.get());
+            
+            return summary;
+        } catch (ExecutionException ee) {
+            ee.printStackTrace();
+            throw new Exception(ee.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }

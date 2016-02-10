@@ -21,8 +21,59 @@ public class VehicleController {
     @RequestMapping(value = "/vehicles", method = RequestMethod.GET)
     public VehicleResponse<Summary> getAllVehicles() {
         VehicleResponse<Summary> response = new VehicleResponse<Summary>();
-        response.setObject(vehicleService.getAllVehicles());
+        try {
+            response.setObject(vehicleService.getAllVehicles());
+        } catch (Exception e) {
+            response.getErrors().add(e.getMessage());
+        }
         return response;
     }
     
+    @ResponseBody
+    @RequestMapping(value = "/slowvehicles", method = RequestMethod.GET)
+    public VehicleResponse<Summary> getSlowVehicles() {
+        VehicleResponse<Summary> response = new VehicleResponse<Summary>();
+        try {
+            response.setObject(vehicleService.getSlowlyAllVehicles());
+        } catch (Exception e) {
+            response.getErrors().add(e.getMessage());
+        }
+        return response;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/slowtolerantvehicles", method = RequestMethod.GET)
+    public VehicleResponse<Summary> getSlowTolerantVehicles() {
+        VehicleResponse<Summary> response = new VehicleResponse<Summary>();
+        try {
+            response.setObject(vehicleService.getSlowTolerantAllVehicles());
+        } catch (Exception e) {
+            response.getErrors().add(e.getMessage());
+        }
+        return response;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/remoteError", method = RequestMethod.GET)
+    public VehicleResponse<Summary> getRemoteError() {
+        VehicleResponse<Summary> response = new VehicleResponse<Summary>();
+        try {
+            response.setObject(vehicleService.getRemoteError());
+        } catch (Exception e) {
+            response.getErrors().add(e.getMessage());
+        }
+        return response;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/nonExisting", method = RequestMethod.GET)
+    public VehicleResponse<Summary> getNonExisting() {
+        VehicleResponse<Summary> response = new VehicleResponse<Summary>();
+        try {
+            response.setObject(vehicleService.getRemoteError());
+        } catch (Exception e) {
+            response.getErrors().add(e.getMessage());
+        }
+        return response;
+    }
 }

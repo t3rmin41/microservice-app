@@ -20,4 +20,24 @@ public class BusController {
     public String getBuses() {
         return busService.getAllBuses();
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/slowBuses", method = RequestMethod.GET)
+    public String getSlowBuses() {
+        String buses = null;
+        try {
+            Thread.sleep(3000);
+            buses = busService.getAllBuses();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return buses;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/internalErrorUrl", method = RequestMethod.GET)
+    public String getInternalError() {
+        throw new RuntimeException("Exception from remote bus service");
+    }
+    
 }
