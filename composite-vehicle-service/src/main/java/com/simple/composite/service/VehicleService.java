@@ -55,9 +55,6 @@ public class VehicleService {
             summary.getTrucks().addAll(trucksFuture.get());
             
             return summary;
-        } catch (ExecutionException ee) {
-            ee.printStackTrace();
-            throw new Exception(ee.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
@@ -78,9 +75,6 @@ public class VehicleService {
             summary.getTrucks().addAll(trucksFuture.get());
             
             return summary;
-        } catch (ExecutionException ee) {
-            ee.printStackTrace();
-            throw new Exception(ee.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
