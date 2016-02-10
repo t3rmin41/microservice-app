@@ -17,8 +17,8 @@ public class VehicleCommand<T> extends HystrixCommand<T> {
         this.response = response;
     }
 
-    
-    //
+    /*
+    //Need to try in execute() command to catch exception
     public T getResponse() {
         try {
             return this.response = this.execute();
