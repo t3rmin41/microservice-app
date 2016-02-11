@@ -13,7 +13,7 @@ import com.simple.entity.response.VehicleResponse;
 
 @Controller
 public class VehicleController {
-
+    
     @Inject
     private VehicleService vehicleService;
 
@@ -21,11 +21,7 @@ public class VehicleController {
     @RequestMapping(value = "/vehicles", method = RequestMethod.GET)
     public VehicleResponse<Summary> getAllVehicles() {
         VehicleResponse<Summary> response = new VehicleResponse<Summary>();
-        try {
-            response.setObject(vehicleService.getAllVehicles());
-        } catch (Exception e) {
-            response.getErrors().add(e.getMessage());
-        }
+        response.setObject(vehicleService.getAllVehicles());
         return response;
     }
     
@@ -33,11 +29,7 @@ public class VehicleController {
     @RequestMapping(value = "/slowvehicles", method = RequestMethod.GET)
     public VehicleResponse<Summary> getSlowVehicles() {
         VehicleResponse<Summary> response = new VehicleResponse<Summary>();
-        try {
-            response.setObject(vehicleService.getSlowlyAllVehicles());
-        } catch (Exception e) {
-            response.getErrors().add(e.getMessage());
-        }
+        response.setObject(vehicleService.getSlowAllVehicles());
         return response;
     }
     
@@ -45,11 +37,7 @@ public class VehicleController {
     @RequestMapping(value = "/slowtolerantvehicles", method = RequestMethod.GET)
     public VehicleResponse<Summary> getSlowTolerantVehicles() {
         VehicleResponse<Summary> response = new VehicleResponse<Summary>();
-        try {
-            response.setObject(vehicleService.getSlowTolerantAllVehicles());
-        } catch (Exception e) {
-            response.getErrors().add(e.getMessage());
-        }
+        response.setObject(vehicleService.getSlowTolerantAllVehicles());
         return response;
     }
     
@@ -57,11 +45,7 @@ public class VehicleController {
     @RequestMapping(value = "/remoteError", method = RequestMethod.GET)
     public VehicleResponse<Summary> getRemoteError() {
         VehicleResponse<Summary> response = new VehicleResponse<Summary>();
-        try {
-            response.setObject(vehicleService.getRemoteError());
-        } catch (Exception e) {
-            response.getErrors().add(e.getMessage());
-        }
+        response.setObject(vehicleService.getRemoteError());
         return response;
     }
     
@@ -69,11 +53,7 @@ public class VehicleController {
     @RequestMapping(value = "/nonExisting", method = RequestMethod.GET)
     public VehicleResponse<Summary> getNonExisting() {
         VehicleResponse<Summary> response = new VehicleResponse<Summary>();
-        try {
-            response.setObject(vehicleService.getRemoteError());
-        } catch (Exception e) {
-            response.getErrors().add(e.getMessage());
-        }
+        response.setObject(vehicleService.getNonExistingUrl());
         return response;
     }
 }

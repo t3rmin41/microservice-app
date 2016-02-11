@@ -24,8 +24,9 @@ public class TruckService {
     
     public List<Truck> getAllTrucks() {
         List<Truck> trucks = new ArrayList<Truck>();
+        Future<List<Truck>> future = new TruckCommand<List<Truck>>(truckRepo.getAllTrucks()).queue();
+        
         try {
-            Future<List<Truck>> future = new TruckCommand<List<Truck>>(truckRepo.getAllTrucks()).queue();
             trucks = future.get();
         } catch (ExecutionException ee) {
             ee.printStackTrace();
@@ -37,8 +38,9 @@ public class TruckService {
     
     public Truck getTruckById(Long id) {
         Truck truck = new Truck();
+        Future<Truck> future = new TruckCommand<Truck>(truckRepo.getTruckById(id)).queue();
+        
         try {
-            Future<Truck> future = new TruckCommand<Truck>(truckRepo.getTruckById(id)).queue();
             truck = future.get();
         } catch (ExecutionException ee) {
             ee.printStackTrace();

@@ -1,10 +1,7 @@
 package com.simple.composite.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 import javax.inject.Inject;
 
@@ -27,7 +24,7 @@ public class VehicleService {
     
     private static final String remoteUrl = "http://localhost:8888/buses";
     private static final String errorUrl = "http://localhost:8888/internalErrorUrl";
-    private static final String nonExistingUrl = "http://localhost:8888/internalErrorUrl";
+    private static final String nonExistingUrl = "http://localhost:8888/nonExisting";
     private static final String slowUrl = "http://localhost:8888/slowBuses";
     
     @Inject
@@ -39,116 +36,90 @@ public class VehicleService {
     @Inject
     private RestTemplate restTemplate;
     
-    public Summary getAllVehicles() throws Exception {
-        try {
+    public Summary getAllVehicles() {
             Summary summary = new Summary();
             
-            Future<Bus[]> busesFutureArr = new VehicleCommand<Bus[]>(restTemplate.getForObject(remoteUrl, Bus[].class), "VehicleGroup", 100).queue();
-            summary.getBuses().addAll(Arrays.asList(busesFutureArr.get()));
+            Bus[] busesArr = new VehicleCommand<Bus[]>("VehicleGroup", "getBuses", restTemplate, remoteUrl, Bus[].class, 300).execute();
+            summary.getBuses().addAll(Arrays.asList(busesArr));
             
-            Future<List<Car>> carsFuture = new VehicleCommand<List<Car>>(carClient.getAllCars().getObject(), "VehicleGroup", 100).queue();
+            List<Car> cars= new VehicleCommand<List<Car>>("VehicleGroup", "getCars", carClient.getAllCars().getObject(), 300).execute();
             // since we ensured that getCars() won't return null,
             // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
-            summary.getCars().addAll(carsFuture.get());
+            summary.getCars().addAll(cars);
             
-            Future<List<Truck>> trucksFuture = new VehicleCommand<List<Truck>>(truckClient.getTrucks().getObject(), "VehicleGroup", 100).queue();
-            summary.getTrucks().addAll(trucksFuture.get());
-            
-            return summary;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
-    
-    public Summary getSlowlyAllVehicles() throws Exception {
-        try {
-            Summary summary = new Summary();
-            
-            Future<Bus[]> busesFutureArr = new VehicleCommand<Bus[]>(restTemplate.getForObject(slowUrl, Bus[].class), "VehicleGroup", 2000).queue();
-            summary.getBuses().addAll(Arrays.asList(busesFutureArr.get()));
-            
-            Future<List<Car>> carsFuture = new VehicleCommand<List<Car>>(carClient.getAllCars().getObject(), "VehicleGroup", 2000).queue();
-            summary.getCars().addAll(carsFuture.get());
-            
-            Future<List<Truck>> trucksFuture = new VehicleCommand<List<Truck>>(truckClient.getTrucks().getObject(), "VehicleGroup", 2000).queue();
-            summary.getTrucks().addAll(trucksFuture.get());
+            List<Truck> trucks = new VehicleCommand<List<Truck>>("VehicleGroup", "getTrucks", truckClient.getTrucks().getObject(), 300).execute();
+            summary.getTrucks().addAll(trucks);
             
             return summary;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
-    
-    public Summary getSlowTolerantAllVehicles() throws Exception {
-        try {
-            Summary summary = new Summary();
-            
-            Future<Bus[]> busesFutureArr = new VehicleCommand<Bus[]>(restTemplate.getForObject(slowUrl, Bus[].class), "VehicleGroup", 6000).queue();
-            summary.getBuses().addAll(Arrays.asList(busesFutureArr.get()));
-            
-            Future<List<Car>> carsFuture = new VehicleCommand<List<Car>>(carClient.getAllCars().getObject(), "VehicleGroup", 6000).queue();
-            summary.getCars().addAll(carsFuture.get());
-            
-            Future<List<Truck>> trucksFuture = new VehicleCommand<List<Truck>>(truckClient.getTrucks().getObject(), "VehicleGroup", 6000).queue();
-            summary.getTrucks().addAll(trucksFuture.get());
-            
-            return summary;
-        } catch (ExecutionException ee) {
-            ee.printStackTrace();
-            throw new Exception(ee.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
     }
 
-    public Summary getRemoteError() throws Exception {
-        try {
-            Summary summary = new Summary();
-
-            Future<Bus[]> busesFutureArr = new VehicleCommand<Bus[]>(restTemplate.getForObject(errorUrl, Bus[].class), "VehicleGroup", 100).queue();
-            summary.getBuses().addAll(Arrays.asList(busesFutureArr.get()));
-            
-            Future<List<Car>> carsFuture = new VehicleCommand<List<Car>>(carClient.getAllCars().getObject(), "VehicleGroup", 100).queue();
-            summary.getCars().addAll(carsFuture.get());
-            
-            Future<List<Truck>> trucksFuture = new VehicleCommand<List<Truck>>(truckClient.getTrucks().getObject(), "VehicleGroup", 100).queue();
-            summary.getTrucks().addAll(trucksFuture.get());
-            
-            return summary;
-        } catch (ExecutionException ee) {
-            ee.printStackTrace();
-            throw new Exception(ee.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
+    public Summary getSlowTolerantAllVehicles() {
+        Summary summary = new Summary();
+        
+        Bus[] busesArr = new VehicleCommand<Bus[]>("VehicleGroup", "getSlowTolerantBuses", restTemplate, slowUrl, Bus[].class, 6000).execute();
+        summary.getBuses().addAll(Arrays.asList(busesArr));
+        
+        List<Car> cars= new VehicleCommand<List<Car>>("VehicleGroup", "getCars", carClient.getAllCars().getObject(), 6000).execute();
+        // since we ensured that getCars() won't return null,
+        // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
+        summary.getCars().addAll(cars);
+        
+        List<Truck> trucks = new VehicleCommand<List<Truck>>("VehicleGroup", "getTrucks", truckClient.getTrucks().getObject(), 6000).execute();
+        summary.getTrucks().addAll(trucks);
+        
+        return summary;
     }
     
-    public Summary getNonExistingUrl() throws Exception {
-        try {
+    public Summary getSlowAllVehicles() {
             Summary summary = new Summary();
             
-            Future<Bus[]> busesFutureArr = new VehicleCommand<Bus[]>(restTemplate.getForObject(nonExistingUrl, Bus[].class), "VehicleGroup", 100).queue();
-            summary.getBuses().addAll(Arrays.asList(busesFutureArr.get()));
+            Bus[] busesArr = new VehicleCommand<Bus[]>("VehicleGroup", "getSlowBuses", restTemplate, slowUrl, Bus[].class, 300).execute();
+            summary.getBuses().addAll(Arrays.asList(busesArr));
             
-            Future<List<Car>> carsFuture = new VehicleCommand<List<Car>>(carClient.getAllCars().getObject(), "VehicleGroup", 100).queue();
+            List<Car> cars= new VehicleCommand<List<Car>>("VehicleGroup", "getCars", carClient.getAllCars().getObject(), 300).execute();
             // since we ensured that getCars() won't return null,
             // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
-            summary.getCars().addAll(carsFuture.get());
+            summary.getCars().addAll(cars);
             
-            Future<List<Truck>> trucksFuture = new VehicleCommand<List<Truck>>(truckClient.getTrucks().getObject(), "VehicleGroup", 100).queue();
-            summary.getTrucks().addAll(trucksFuture.get());
+            List<Truck> trucks = new VehicleCommand<List<Truck>>("VehicleGroup", "getTrucks", truckClient.getTrucks().getObject(), 300).execute();
+            summary.getTrucks().addAll(trucks);
             
             return summary;
-        } catch (ExecutionException ee) {
-            ee.printStackTrace();
-            throw new Exception(ee.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw e;
-        }
+    }
+    
+
+
+    public Summary getRemoteError() {
+            Summary summary = new Summary();
+
+            Bus[] busesArr = new VehicleCommand<Bus[]>("VehicleGroup", "getErrorBuses", restTemplate, errorUrl, Bus[].class, 300).execute();
+            summary.getBuses().addAll(Arrays.asList(busesArr));
+            
+            List<Car> cars= new VehicleCommand<List<Car>>("VehicleGroup", "getCars", carClient.getAllCars().getObject(), 300).execute();
+            // since we ensured that getCars() won't return null,
+            // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
+            summary.getCars().addAll(cars);
+            
+            List<Truck> trucks = new VehicleCommand<List<Truck>>("VehicleGroup", "getTrucks", truckClient.getTrucks().getObject(), 300).execute();
+            summary.getTrucks().addAll(trucks);
+            
+            return summary;
+    }
+    
+    public Summary getNonExistingUrl() {
+            Summary summary = new Summary();
+            
+            Bus[] busesArr = new VehicleCommand<Bus[]>("VehicleGroup", "getNonExistingBuses", restTemplate, nonExistingUrl, Bus[].class, 300).execute();
+            summary.getBuses().addAll(Arrays.asList(busesArr));
+            
+            List<Car> cars= new VehicleCommand<List<Car>>("VehicleGroup", "getCars", carClient.getAllCars().getObject(), 300).execute();
+            // since we ensured that getCars() won't return null,
+            // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
+            summary.getCars().addAll(cars);
+            
+            List<Truck> trucks = new VehicleCommand<List<Truck>>("VehicleGroup", "getTrucks", truckClient.getTrucks().getObject(), 300).execute();
+            summary.getTrucks().addAll(trucks);
+            
+            return summary;
     }
 }

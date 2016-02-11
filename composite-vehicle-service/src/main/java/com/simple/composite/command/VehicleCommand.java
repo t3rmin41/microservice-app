@@ -1,16 +1,33 @@
 package com.simple.composite.command;
 
+import org.springframework.web.client.RestTemplate;
+
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandKey;
 import com.netflix.hystrix.HystrixCommandProperties;
-import com.netflix.hystrix.HystrixCommand.Setter;
 
 public class VehicleCommand<T> extends HystrixCommand<T> {
 
+    private String url;
+    private RestTemplate restTemplate;
+    private Class<T> clazz;
     private T response;
     
-    public VehicleCommand(T response, String groupKey, int timeout) {
+    public VehicleCommand(String groupKey, String commandKey, RestTemplate restTemplate, String url, Class<T> clazz, int timeout) {
         super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(groupKey))
+                .andCommandKey(HystrixCommandKey.Factory.asKey(commandKey))
+                .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
+                        .withExecutionTimeoutInMilliseconds(timeout))
+          );
+        this.url = url;
+        this.restTemplate = restTemplate;
+        this.clazz = clazz;
+    }
+    
+    public VehicleCommand(String groupKey, String commandKey, T response, int timeout) {
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(groupKey))
+                .andCommandKey(HystrixCommandKey.Factory.asKey(commandKey))
                 .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
                         .withExecutionTimeoutInMilliseconds(timeout))
           );
@@ -31,6 +48,7 @@ public class VehicleCommand<T> extends HystrixCommand<T> {
     
     @Override
     protected T run() throws Exception {
-        return this.response;
+        return null == response ? restTemplate.getForObject(url, clazz) : response;
     }
+
 }
