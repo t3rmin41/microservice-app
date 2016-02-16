@@ -20,10 +20,10 @@ public class TruckApplication {
 
     private static Logger log = LoggerFactory.getLogger(TruckApplication.class);
     
-    private static SingletonUUID singletonUUID = SingletonUUID.getInstance();
+    private static SingletonUUID singletonUUID = SingletonUUID.ID; //.getId();
     
     public static void main(String[] args) {
-        log.warn("Starting truck service with UUID " + singletonUUID.getUUID().toString());
+        log.warn("Starting truck service with UUID " + singletonUUID.getId());
         ApplicationContext context = SpringApplication.run(TruckApplication.class, args);
         log.warn("Application context ID : " + context.getId());
     }
@@ -31,7 +31,7 @@ public class TruckApplication {
     @Bean
     public EurekaInstanceConfigBean eurekaInstanceConfigBean() {
         EurekaInstanceConfigBean config = new EurekaInstanceConfigBean();
-        config.getMetadataMap().put("instanceId", singletonUUID.getUUID().toString()); // set UUID to observe in Eureka
+        config.getMetadataMap().put("instanceId", singletonUUID.getId()); // set UUID to observe in Eureka
         return config;
     }
 }

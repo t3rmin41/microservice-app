@@ -7,10 +7,10 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 
 import com.simple.entity.response.Summary;
+import com.simple.entity.response.VehicleResponse;
 import com.simple.entity.vehicle.Bus;
 import com.simple.entity.vehicle.Car;
 import com.simple.entity.vehicle.Truck;
@@ -39,15 +39,15 @@ public class VehicleService {
     public Summary getAllVehicles() {
             Summary summary = new Summary();
             
-            Bus[] busesArr = new VehicleCommand<Bus[]>("VehicleGroup", "getBuses", restTemplate, remoteUrl, Bus[].class, 300).execute();
+            Bus[] busesArr = new VehicleCommand<Bus[]>("getBuses", restTemplate, remoteUrl, Bus[].class, 300).execute();
             summary.getBuses().addAll(Arrays.asList(busesArr));
             
-            List<Car> cars= new VehicleCommand<List<Car>>("VehicleGroup", "getCars", carClient.getAllCars().getObject(), 300).execute();
+            List<Car> cars = new VehicleCommand<List<Car>>("getCars", carClient.getAllCars().getObject(), 300).execute();
             // since we ensured that getCars() won't return null,
             // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
             summary.getCars().addAll(cars);
             
-            List<Truck> trucks = new VehicleCommand<List<Truck>>("VehicleGroup", "getTrucks", truckClient.getTrucks().getObject(), 300).execute();
+            List<Truck> trucks = new VehicleCommand<List<Truck>>("getTrucks", truckClient.getTrucks().getObject(), 300).execute();
             summary.getTrucks().addAll(trucks);
             
             return summary;
@@ -56,15 +56,15 @@ public class VehicleService {
     public Summary getSlowTolerantAllVehicles() {
         Summary summary = new Summary();
         
-        Bus[] busesArr = new VehicleCommand<Bus[]>("VehicleGroup", "getSlowTolerantBuses", restTemplate, slowUrl, Bus[].class, 6000).execute();
+        Bus[] busesArr = new VehicleCommand<Bus[]>("getSlowTolerantBuses", restTemplate, slowUrl, Bus[].class, 6000).execute();
         summary.getBuses().addAll(Arrays.asList(busesArr));
         
-        List<Car> cars= new VehicleCommand<List<Car>>("VehicleGroup", "getCars", carClient.getAllCars().getObject(), 6000).execute();
+        List<Car> cars= new VehicleCommand<List<Car>>("getCars", carClient.getAllCars().getObject(), 6000).execute();
         // since we ensured that getCars() won't return null,
         // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
         summary.getCars().addAll(cars);
         
-        List<Truck> trucks = new VehicleCommand<List<Truck>>("VehicleGroup", "getTrucks", truckClient.getTrucks().getObject(), 6000).execute();
+        List<Truck> trucks = new VehicleCommand<List<Truck>>("getTrucks", truckClient.getTrucks().getObject(), 6000).execute();
         summary.getTrucks().addAll(trucks);
         
         return summary;
@@ -73,15 +73,15 @@ public class VehicleService {
     public Summary getSlowAllVehicles() {
             Summary summary = new Summary();
             
-            Bus[] busesArr = new VehicleCommand<Bus[]>("VehicleGroup", "getSlowBuses", restTemplate, slowUrl, Bus[].class, 300).execute();
+            Bus[] busesArr = new VehicleCommand<Bus[]>("getSlowBuses", restTemplate, slowUrl, Bus[].class, 300).execute();
             summary.getBuses().addAll(Arrays.asList(busesArr));
             
-            List<Car> cars= new VehicleCommand<List<Car>>("VehicleGroup", "getCars", carClient.getAllCars().getObject(), 300).execute();
+            List<Car> cars= new VehicleCommand<List<Car>>("getCars", carClient.getAllCars().getObject(), 300).execute();
             // since we ensured that getCars() won't return null,
             // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
             summary.getCars().addAll(cars);
             
-            List<Truck> trucks = new VehicleCommand<List<Truck>>("VehicleGroup", "getTrucks", truckClient.getTrucks().getObject(), 300).execute();
+            List<Truck> trucks = new VehicleCommand<List<Truck>>("getTrucks", truckClient.getTrucks().getObject(), 300).execute();
             summary.getTrucks().addAll(trucks);
             
             return summary;
@@ -92,15 +92,15 @@ public class VehicleService {
     public Summary getRemoteError() {
             Summary summary = new Summary();
 
-            Bus[] busesArr = new VehicleCommand<Bus[]>("VehicleGroup", "getErrorBuses", restTemplate, errorUrl, Bus[].class, 300).execute();
+            Bus[] busesArr = new VehicleCommand<Bus[]>("getErrorBuses", restTemplate, errorUrl, Bus[].class, 300).execute();
             summary.getBuses().addAll(Arrays.asList(busesArr));
             
-            List<Car> cars= new VehicleCommand<List<Car>>("VehicleGroup", "getCars", carClient.getAllCars().getObject(), 300).execute();
+            List<Car> cars= new VehicleCommand<List<Car>>("getCars", carClient.getAllCars().getObject(), 300).execute();
             // since we ensured that getCars() won't return null,
             // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
             summary.getCars().addAll(cars);
             
-            List<Truck> trucks = new VehicleCommand<List<Truck>>("VehicleGroup", "getTrucks", truckClient.getTrucks().getObject(), 300).execute();
+            List<Truck> trucks = new VehicleCommand<List<Truck>>("getTrucks", truckClient.getTrucks().getObject(), 300).execute();
             summary.getTrucks().addAll(trucks);
             
             return summary;
@@ -109,15 +109,15 @@ public class VehicleService {
     public Summary getNonExistingUrl() {
             Summary summary = new Summary();
             
-            Bus[] busesArr = new VehicleCommand<Bus[]>("VehicleGroup", "getNonExistingBuses", restTemplate, nonExistingUrl, Bus[].class, 300).execute();
+            Bus[] busesArr = new VehicleCommand<Bus[]>("getNonExistingBuses", restTemplate, nonExistingUrl, Bus[].class, 300).execute();
             summary.getBuses().addAll(Arrays.asList(busesArr));
             
-            List<Car> cars= new VehicleCommand<List<Car>>("VehicleGroup", "getCars", carClient.getAllCars().getObject(), 300).execute();
+            List<Car> cars= new VehicleCommand<List<Car>>("getCars", carClient.getAllCars().getObject(), 300).execute();
             // since we ensured that getCars() won't return null,
             // we add carClient.getAllCars() [which can be null eventually] to not null 'cars'
             summary.getCars().addAll(cars);
             
-            List<Truck> trucks = new VehicleCommand<List<Truck>>("VehicleGroup", "getTrucks", truckClient.getTrucks().getObject(), 300).execute();
+            List<Truck> trucks = new VehicleCommand<List<Truck>>("getTrucks", truckClient.getTrucks().getObject(), 300).execute();
             summary.getTrucks().addAll(trucks);
             
             return summary;

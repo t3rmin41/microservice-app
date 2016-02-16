@@ -2,20 +2,26 @@ package com.simple.entity.app;
 
 import java.util.UUID;
 
-public class SingletonUUID {
+public enum SingletonUUID {
     
-    private static SingletonUUID instance = new SingletonUUID();
+    ID;
+    
+    //private static SingletonUUID instance = new SingletonUUID();
 
     private UUID uuid = UUID.randomUUID();
 
     private SingletonUUID() {
     }
     
-    public static SingletonUUID getInstance() {
-        return instance;
+    public String getId() {
+        return this.uuid.toString();
     }
     
-    public UUID getUUID() {
-        return this.uuid;
-    }
+//    public static SingletonUUID getInstance() {
+//        return instance;
+//    }
+//    
+//    public UUID getUUID() {
+//        return this.uuid;
+//    }
 }

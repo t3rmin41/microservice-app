@@ -5,14 +5,14 @@ import ch.qos.logback.core.sift.Discriminator;
 
 public class UniqueIdDiscriminator implements Discriminator<ILoggingEvent> {
 
-    private static SingletonUUID singletonUUID = SingletonUUID.getInstance();
+    private static String singletonUUID = SingletonUUID.ID.getId();
     
     private static final String KEY = "serviceInstanceId";
     
     private boolean started;
     
     public String getDiscriminatingValue(ILoggingEvent iLoggingEvent) {
-        return singletonUUID.getUUID().toString();
+        return singletonUUID; //.getUUID().toString();
     }
 
     public String getKey() {

@@ -14,22 +14,22 @@ public class VehicleCommand<T> extends HystrixCommand<T> {
     private Class<T> clazz;
     private T response;
     
-    public VehicleCommand(String groupKey, String commandKey, RestTemplate restTemplate, String url, Class<T> clazz, int timeout) {
-        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(groupKey))
-                .andCommandKey(HystrixCommandKey.Factory.asKey(commandKey))
-                .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
-                        .withExecutionTimeoutInMilliseconds(timeout))
+    public VehicleCommand(String commandKey, RestTemplate restTemplate, String url, Class<T> clazz, int timeout) {
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("VehicleGroup"))
+                    .andCommandKey(HystrixCommandKey.Factory.asKey(commandKey))
+                    .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
+                    .withExecutionTimeoutInMilliseconds(timeout))
           );
         this.url = url;
         this.restTemplate = restTemplate;
         this.clazz = clazz;
     }
     
-    public VehicleCommand(String groupKey, String commandKey, T response, int timeout) {
-        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey(groupKey))
-                .andCommandKey(HystrixCommandKey.Factory.asKey(commandKey))
-                .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
-                        .withExecutionTimeoutInMilliseconds(timeout))
+    public VehicleCommand(String commandKey, T response, int timeout) {
+        super(Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("VehicleGroup"))
+                    .andCommandKey(HystrixCommandKey.Factory.asKey(commandKey))
+                    .andCommandPropertiesDefaults(HystrixCommandProperties.Setter()
+                    .withExecutionTimeoutInMilliseconds(timeout))
           );
         this.response = response;
     }

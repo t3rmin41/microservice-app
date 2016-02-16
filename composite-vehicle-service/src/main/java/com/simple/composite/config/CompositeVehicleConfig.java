@@ -18,12 +18,12 @@ import com.simple.entity.app.SingletonUUID;
 @ComponentScan(basePackages = {"com.simple.composite.controller", "com.simple.composite.service"})
 public class CompositeVehicleConfig {
 
-    private static SingletonUUID singletonUUID = SingletonUUID.getInstance();
+    private static SingletonUUID singletonUUID = SingletonUUID.ID;
     
     @Bean
     public InfoEndpoint infoEndpoint() {
          final LinkedHashMap<String, String> map = new LinkedHashMap<String, String>();
-         map.put("InstanceID",  singletonUUID.getUUID().toString());
+         map.put("InstanceID",  singletonUUID.getId());
          return new InfoEndpoint(map);
     }
     

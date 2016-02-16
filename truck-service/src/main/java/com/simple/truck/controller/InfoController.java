@@ -14,13 +14,13 @@ public class InfoController {
 
     private static Logger log = LoggerFactory.getLogger(InfoController.class);
 
-    private static SingletonUUID singletonUUID = SingletonUUID.getInstance();
+    private static SingletonUUID singletonUUID = SingletonUUID.ID;
     
     @ResponseBody
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     public String info() {
-        log.info("Requested URL : /info for UUID : " + singletonUUID.getUUID());
-        log.info("Application UUID : " + singletonUUID.getUUID());
-        return "This is truck service with UUID : " + singletonUUID.getUUID().toString();
+        log.info("Requested URL : /info for UUID : " + singletonUUID.getId());
+        log.info("Application UUID : " + singletonUUID.getId());
+        return "This is truck service with UUID : " + singletonUUID.getId();
     }
 }
