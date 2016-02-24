@@ -42,17 +42,18 @@ dependencies {
     compile("org.springframework.cloud:spring-cloud-starter-eureka:1.0.3.RELEASE")
     compile("javax.inject:javax.inject:1")
     //3. Logback
-    compile ("ch.qos.logback:logback-classic:1.+")
+    compile("ch.qos.logback:logback-classic:1.+")
+    compile("ch.qos.logback:logback-access:1.+")
     
     //4. Hystrix components
     compile("org.springframework.boot:spring-boot-starter-actuator")
-    compile ("org.springframework.cloud:spring-cloud-starter-hystrix:1.0.4.RELEASE") {
+    compile("org.springframework.cloud:spring-cloud-starter-hystrix:1.0.4.RELEASE") {
         exclude module: 'com.netflix.archaius:archaius-core'
     }
-    compile ("org.springframework.cloud:spring-cloud-starter-hystrix-dashboard:1.0.4.RELEASE") {
+    compile("org.springframework.cloud:spring-cloud-starter-hystrix-dashboard:1.0.4.RELEASE") {
         exclude module: 'com.netflix.archaius:archaius-core'
     }
-    compile ("com.netflix.archaius:archaius-core:0.7.1")
+    compile("com.netflix.archaius:archaius-core:0.7.1")
     
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }

@@ -14,7 +14,7 @@
     </appender>
 
     <appender name="SIFTSYSLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator class="com.simple.entity.app.UniqueIdDiscriminator" />
+        <discriminator class="com.simple.truck.app.IdDiscriminator" />
         <sift>
             <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>./${log-dir}/${serviceInstanceId}/sys.log</file>
@@ -37,7 +37,7 @@
     </appender>
 
     <appender name="SIFTDEPLOYLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator class="com.simple.entity.app.UniqueIdDiscriminator" />
+        <discriminator class="com.simple.truck.app.IdDiscriminator" />
         <sift>
             <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>./${log-dir}/${serviceInstanceId}/deploy.log</file>
@@ -60,7 +60,7 @@
     </appender>
 
     <appender name="SIFTCONTROLLERLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator class="com.simple.entity.app.UniqueIdDiscriminator" />
+        <discriminator class="com.simple.truck.app.IdDiscriminator" />
         <sift>
             <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>./${log-dir}/${serviceInstanceId}/controller.log</file>
@@ -83,7 +83,7 @@
     </appender>
 
     <appender name="SIFTSERVICELOG" class="ch.qos.logback.classic.sift.SiftingAppender">
-        <discriminator class="com.simple.entity.app.UniqueIdDiscriminator" />
+        <discriminator class="com.simple.truck.app.IdDiscriminator" />
         <sift>
             <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
                 <file>./${log-dir}/${serviceInstanceId}/service.log</file>

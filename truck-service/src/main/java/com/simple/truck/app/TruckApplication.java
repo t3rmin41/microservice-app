@@ -20,7 +20,7 @@ public class TruckApplication {
 
     private static Logger log = LoggerFactory.getLogger(TruckApplication.class);
     
-    private static SingletonUUID singletonUUID = SingletonUUID.ID; //.getId();
+    private static SingletonUUID singletonUUID = SingletonUUID.INSTANCE; //.getId();
     
     public static void main(String[] args) {
         log.warn("Starting truck service with UUID " + singletonUUID.getId());

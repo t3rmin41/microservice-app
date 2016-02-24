@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public enum SingletonUUID {
     
-    ID;
+    INSTANCE;
     
     //private static SingletonUUID instance = new SingletonUUID();
 

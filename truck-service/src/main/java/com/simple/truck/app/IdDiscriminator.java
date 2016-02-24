@@ -1,18 +1,20 @@
-package com.simple.entity.app;
+package com.simple.truck.app;
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.sift.Discriminator;
+import ch.qos.logback.core.spi.DeferredProcessingAware;
 
-public class UniqueIdDiscriminator implements Discriminator<ILoggingEvent> {
+import com.simple.entity.app.SingletonUUID;
 
-    private static String singletonUUID = SingletonUUID.INSTANCE.getId();
+public class IdDiscriminator implements Discriminator<DeferredProcessingAware> {
+
+    private static String uuid = SingletonUUID.INSTANCE.getId();
     
     private static final String KEY = "serviceInstanceId";
     
     private boolean started;
     
-    public String getDiscriminatingValue(ILoggingEvent iLoggingEvent) {
-        return singletonUUID; //.getUUID().toString();
+    public String getDiscriminatingValue(DeferredProcessingAware logEvent) {
+        return uuid;
     }
 
     public String getKey() {
