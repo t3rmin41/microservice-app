@@ -14,7 +14,7 @@ public class InfoController {
 
     private static Logger log = LoggerFactory.getLogger(InfoController.class);
 
-    private static SingletonUUID singletonUUID = SingletonUUID.ID;
+    private static SingletonUUID singletonUUID = SingletonUUID.INSTANCE;
     
     @ResponseBody
     @RequestMapping(value = "/info", method = RequestMethod.GET)

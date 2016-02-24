@@ -20,7 +20,7 @@ public class CarApplication {
 
     private static Logger log = LoggerFactory.getLogger(CarApplication.class);
     
-    private static SingletonUUID singletonUUID = SingletonUUID.ID;
+    private static SingletonUUID singletonUUID = SingletonUUID.INSTANCE;
     
     public static void main(String[] args) {
         log.warn("Starting car service with UUID " + singletonUUID.getId());

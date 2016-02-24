@@ -23,7 +23,7 @@ public class CompositeVehicleApp {
     
     private static Logger log = LoggerFactory.getLogger(CompositeVehicleApp.class);
     
-    private static SingletonUUID singletonUUID = SingletonUUID.ID;
+    private static SingletonUUID singletonUUID = SingletonUUID.INSTANCE;
     
     public static void main(String[] args) {
         log.warn("Starting composite vehicle service with UUID " + singletonUUID.getId());

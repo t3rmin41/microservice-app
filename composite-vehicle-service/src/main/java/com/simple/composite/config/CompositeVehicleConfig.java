@@ -18,7 +18,7 @@ import com.simple.entity.app.SingletonUUID;
 @ComponentScan(basePackages = {"com.simple.composite.controller", "com.simple.composite.service"})
 public class CompositeVehicleConfig {
 
-    private static SingletonUUID singletonUUID = SingletonUUID.ID;
+    private static SingletonUUID singletonUUID = SingletonUUID.INSTANCE;
     
     @Bean
     public InfoEndpoint infoEndpoint() {
