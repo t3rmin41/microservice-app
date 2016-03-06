@@ -6,6 +6,15 @@ public class Truck {
     private String title;
     private Double price;
 
+    public Truck() {
+    }
+    
+    public Truck(Long id, String title, Double price) {
+        this.id = id;
+        this.title = title;
+        this.price = price;
+    }
+    
     public Long getId() {
         return id;
     }

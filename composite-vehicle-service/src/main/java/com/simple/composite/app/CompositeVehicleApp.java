@@ -26,7 +26,6 @@ public class CompositeVehicleApp {
     private static SingletonUUID singletonUUID = SingletonUUID.INSTANCE;
     
     public static void main(String[] args) {
-        log.warn("Starting composite vehicle service with UUID " + singletonUUID.getId());
         ApplicationContext context = SpringApplication.run(CompositeVehicleApp.class, args);
         log.warn("Application context ID : " + context.getId());
     }

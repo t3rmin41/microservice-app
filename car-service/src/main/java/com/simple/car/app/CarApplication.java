@@ -23,7 +23,6 @@ public class CarApplication {
     private static SingletonUUID singletonUUID = SingletonUUID.INSTANCE;
     
     public static void main(String[] args) {
-        log.warn("Starting car service with UUID " + singletonUUID.getId());
         ApplicationContext context = SpringApplication.run(CarApplication.class, args);
         log.warn("Application context ID : " + context.getId());
     }

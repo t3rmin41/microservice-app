@@ -14,7 +14,7 @@ import com.simple.entity.app.SingletonUUID;
 import com.simple.truck.config.TruckConfig;
 
 @SpringBootApplication
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @Import({TruckConfig.class})
 public class TruckApplication {
 
@@ -23,8 +23,7 @@ public class TruckApplication {
     private static SingletonUUID singletonUUID = SingletonUUID.INSTANCE; //.getId();
     
     public static void main(String[] args) {
-        log.warn("Starting truck service with UUID " + singletonUUID.getId());
-        ApplicationContext context = SpringApplication.run(TruckApplication.class, args);
+        ApplicationContext context = SpringApplication.run(new Class<?>[] {TruckApplication.class}, args);
         log.warn("Application context ID : " + context.getId());
     }
 

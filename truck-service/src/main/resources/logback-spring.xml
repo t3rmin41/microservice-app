@@ -104,9 +104,36 @@
             </appender>
         </sift>
     </appender>
+    
+        <appender name="SIFTTOMCATLOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator class="com.simple.truck.app.IdDiscriminator" />
+        <sift>
+            <appender name="FILE-${serviceInstanceId}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>./${log-dir}/${serviceInstanceId}/tomcat.log</file>
+                <append>false</append>
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <pattern>%d{"yyyy-MM-dd HH:mm:ss,SSS 'UTC'", UTC} ${COMMON_LOG_PATTERN}</pattern>
+                </layout>
+ 
+                <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                    <FileNamePattern>./${log-dir}/${serviceInstanceId}/tomcat.%i.log.zip</FileNamePattern>
+                    <MinIndex>1</MinIndex>
+                    <MaxIndex>10</MaxIndex>
+                </rollingPolicy>
+ 
+                <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                    <MaxFileSize>10MB</MaxFileSize>
+                </triggeringPolicy>
+            </appender>
+        </sift>
+    </appender>
 
     <!--DEVELOPMENT logger-->
     <springProfile name="local-dev">
+        <logger name="org.apache" additivity="false">
+            <appender-ref ref="SIFTTOMCATLOG" />
+            <appender-ref ref="simpleConsole" />
+        </logger>
         <logger name="com.simple.truck.app" additivity="false">
             <appender-ref ref="SIFTSYSLOG" />
             <appender-ref ref="SIFTDEPLOYLOG" />
@@ -132,6 +159,10 @@
 
     <!--PRODUCTION logger-->
     <springProfile name="prod">
+        <logger name="org.apache" additivity="false">
+            <appender-ref ref="SIFTTOMCATLOG" />
+            <appender-ref ref="simpleConsole" />
+        </logger>
         <logger name="com.simple.truck.app" additivity="false">
             <appender-ref ref="SIFTSYSLOG" />
             <appender-ref ref="SIFTDEPLOYLOG" />
