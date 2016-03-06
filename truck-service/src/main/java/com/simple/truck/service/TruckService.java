@@ -60,4 +60,21 @@ public class TruckService {
         }
         return truck;
     }
+    
+    public Truck getTruckByDbId(Long id) {
+        Truck truck = new Truck();
+        TruckJpa jpa = truckJpaRepo.getTruckById(id);
+        truck.setId(jpa.getId());
+        truck.setTitle(jpa.getTitle());
+        truck.setPrice(jpa.getPrice());
+        return truck;
+    }
+    
+    public Long createTruck(Truck truck) {
+        TruckJpa jpa = new TruckJpa();
+        jpa.setPrice(truck.getPrice());
+        jpa.setTitle(truck.getTitle());
+        jpa = truckJpaRepo.addTruck(jpa);
+        return jpa.getId();
+    }
 }

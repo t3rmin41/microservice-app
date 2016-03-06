@@ -14,7 +14,7 @@ public class TruckJpa {
 
     @Id
     @GeneratedValue
-    @Column(name="id", nullable = false)
+    @Column(name="id", nullable = false, insertable = false)
     private Long id;
     
     @Column(name="title")
@@ -22,11 +22,11 @@ public class TruckJpa {
     
     @Column(name="price")
     private Double price;
-    
-    @Column(name="created")
+
+    @Column(name="created", insertable = false, updatable = false)
     private Date created;
-    
-    @Column(name="updated")
+
+    @Column(name="updated", insertable = false)
     private Date updated;
     
     public Long getId() {

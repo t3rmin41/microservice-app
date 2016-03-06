@@ -14,13 +14,13 @@ import com.simple.entity.app.SingletonUUID;
 import com.simple.truck.config.TruckConfig;
 
 @SpringBootApplication
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 @Import({TruckConfig.class})
 public class TruckApplication {
 
     private static Logger log = LoggerFactory.getLogger(TruckApplication.class);
     
-    private static SingletonUUID singletonUUID = SingletonUUID.INSTANCE; //.getId();
+    private static SingletonUUID singletonUUID = SingletonUUID.INSTANCE;
     
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(new Class<?>[] {TruckApplication.class}, args);

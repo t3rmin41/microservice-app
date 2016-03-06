@@ -22,7 +22,15 @@ public class TruckJpaRepository {
     }
 
     @Transactional
-    public Long addTruck(TruckJpa jpa) {
+    public TruckJpa addTruck(TruckJpa jpa) {
+        entityManager.persist(jpa);
+        entityManager.flush();
+        entityManager.refresh(jpa);
+        return jpa;
+    }
+    
+    @Transactional
+    public Long addTruckWithReturnedId(TruckJpa jpa) {
         return entityManager.merge(jpa).getId();
     }
     
