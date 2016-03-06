@@ -56,7 +56,7 @@ public class JpaConfig {
      private Properties additionalProperties() {
          Properties properties = new Properties();
          //properties.setProperty("hibernate.hbm2ddl.auto", "update");
-         properties.setProperty("hibernate.hbm2ddl.auto", "create");
+         properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
          //properties.setProperty("hibernate.hbm2ddl.auto", "update-none");
          properties.setProperty("hibernate.hbm2ddl.import_files", "trucks_dump.sql");
          properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
