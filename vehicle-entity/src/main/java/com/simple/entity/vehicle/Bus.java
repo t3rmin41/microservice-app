@@ -27,7 +27,7 @@ public class Bus {
 
     @Override
     public String toString() {
-        return "{\"id\": \"" + this.id + "\", \"model\": \"" + this.model + "\", \"capacity\": \"" + this.capacity + "\" }";
+        return "{\"id\": \"" + this.id + "\", \"model\": \"" + this.model + "\", \"capacity\": \"" + this.capacity + "\"}";
     }
     
     //return "[{\"id\": \"1\", \"model\": \"Ikarus\", \"capacity\": \"50\"}, {\"id\": \"2\", \"model\": \"Mercedes\", \"capacity\": \"65\"}]";

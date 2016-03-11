@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.simple.bus.jdbc.BusJdbcRepository;
+import com.simple.entity.vehicle.Bus;
 
 @Component
 public class BusService {
@@ -14,7 +15,11 @@ public class BusService {
     private BusJdbcRepository busRepo;
     
     public String getAllBuses() {
-        return "[{" + getJdbcBuses() +", \"id\": \"2\", \"model\": \"Ikarus\", \"capacity\": \"50\"}, {\"id\": \"3\", \"model\": \"Mercedes\", \"capacity\": \"65\"}]";
+        String separator = ", ";
+        if ("".equals(getJdbcBuses())) { // empty List<Bus>
+            separator = "";
+        }
+        return "[" + getJdbcBuses() + separator + "{\"id\": \"3\", \"model\": \"Ikarus\", \"capacity\": \"50\"}, {\"id\": \"4\", \"model\": \"Mercedes\", \"capacity\": \"65\"}]";
     }
     
     public String getJdbcBuses() {

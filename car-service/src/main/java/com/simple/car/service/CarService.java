@@ -1,5 +1,6 @@
 package com.simple.car.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -21,7 +22,12 @@ public class CarService {
     private CarJdbcRepository carJdbcRepo;
     
     public List<Car> getAllCars() {
-        return carRepo.getAllCars();
+        List<Car> allCars = new ArrayList<Car>();
+        List<Car> inMemoryCars = carRepo.getAllCars();
+        List<Car> jdbcCars = carJdbcRepo.getAllCars();
+        allCars.addAll(inMemoryCars);
+        allCars.addAll(jdbcCars);
+        return allCars;
     }
     
     public Car getCarById(Long id) {

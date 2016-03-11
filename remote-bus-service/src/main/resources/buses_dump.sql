@@ -14,6 +14,7 @@ SET row_security = off;
 
 CREATE TABLE public.buses (bus_id bigint NOT NULL, model character varying(255), capacity bigint, CONSTRAINT bus_primarykey PRIMARY KEY (bus_id)) WITH (OIDS=FALSE );
 
-INSERT INTO public.buses (bus_id, model, capacity) VALUES (1, 'Volvo', 45);
-
 ALTER TABLE public.buses OWNER TO postgres;
+
+INSERT INTO public.buses (bus_id, model, capacity) VALUES (1, 'Volvo', 45);
+INSERT INTO public.buses (bus_id, model, capacity) VALUES (2, 'Skoda', 35);

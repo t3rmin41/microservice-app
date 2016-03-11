@@ -18,7 +18,8 @@ import com.simple.entity.vehicle.Bus;
 
 public class BusJdbcRepositoryTest {
 
-private static final int THREAD_COUNT = 150;
+    private static final int THREAD_COUNT = 150;
+    private static final long startWithId = 1;
     
     @Autowired
     private BusJdbcRepository busRepo;
@@ -44,7 +45,7 @@ private static final int THREAD_COUNT = 150;
         // Validate the IDs
         Assert.assertEquals(THREAD_COUNT, futures.size());
         List<Long> expectedList = new ArrayList<Long>(THREAD_COUNT);
-        for (long i = 1; i <= THREAD_COUNT; i++) {
+        for (long i = startWithId; i <= THREAD_COUNT; i++) {
             expectedList.add(i);
         }
         Collections.sort(resultList);

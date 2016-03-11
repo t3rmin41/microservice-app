@@ -3,6 +3,7 @@ package com.simple.bus.controller;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,7 +43,7 @@ public class BusController {
     
     @ResponseBody
     @RequestMapping(value = "/newBus/{model}/{capacity}", method = RequestMethod.GET)
-    public Long createBus() {
-        throw new RuntimeException("Exception from remote bus service");
+    public Long createBus(@PathVariable("model") String model, @PathVariable("capacity") Long capacity) {
+        return busService.createBus(model, capacity);
     }
 }

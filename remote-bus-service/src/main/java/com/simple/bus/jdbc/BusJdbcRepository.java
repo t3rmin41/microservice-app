@@ -11,12 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.simple.entity.vehicle.Bus;
-import com.simple.entity.vehicle.Car;
 
 @Repository
 public class BusJdbcRepository {
@@ -24,7 +21,7 @@ public class BusJdbcRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
-    private AtomicLong atomicId = new AtomicLong(1);
+    private AtomicLong atomicId = new AtomicLong(2);
     //private MyLong atomicId = new MyLong();
     
     private RowMapper<Bus> busRowMapper = new RowMapper<Bus>() {
@@ -58,7 +55,7 @@ public class BusJdbcRepository {
                             PreparedStatement ps = connection.prepareStatement("INSERT INTO buses " + 
                                                                                "(bus_id, model, capacity) VALUES " + 
                                                                                "(?, ?, ?)");
-                            ps.setString(1, bus.getId());
+                            ps.setLong(1, bus.getId());
                             ps.setString(2, bus.getModel());
                             ps.setLong(3, bus.getCapacity());
                             return ps;
@@ -69,7 +66,7 @@ public class BusJdbcRepository {
 }
 
 //class MyLong {
-//  private Long id = 1L;
+//  private Long id = 2L;
 //  
 //  public Long incrementAndGet() {
 //      id = id + 1;
