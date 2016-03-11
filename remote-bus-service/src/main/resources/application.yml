@@ -1,5 +1,10 @@
 spring:
     application:
         name: remote-bus-service
+    datasource:
+        url: jdbc:postgresql://localhost:5432/vehicle_db
+        username: postgres
+        password: postgres
+        driverClassName: org.postgresql.Driver
 server: 
     port: 8888

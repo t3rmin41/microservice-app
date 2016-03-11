@@ -77,4 +77,11 @@ public class TruckService {
         jpa = truckJpaRepo.addTruck(jpa);
         return jpa.getId();
     }
+    
+    public Long editTruck(Long truckId, Double price) {
+        TruckJpa jpa = truckJpaRepo.getTruckById(truckId);
+        jpa.setPrice(price);
+        Long jpaId = truckJpaRepo.addTruckWithReturnedId(jpa);
+        return jpa.getId();
+    }
 }

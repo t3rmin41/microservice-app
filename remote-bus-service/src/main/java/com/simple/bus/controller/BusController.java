@@ -40,4 +40,9 @@ public class BusController {
         throw new RuntimeException("Exception from remote bus service");
     }
     
+    @ResponseBody
+    @RequestMapping(value = "/newBus/{model}/{capacity}", method = RequestMethod.GET)
+    public Long createBus() {
+        throw new RuntimeException("Exception from remote bus service");
+    }
 }

@@ -35,4 +35,20 @@ public class CarController {
         response.setObject(carService.getCarById(carId));
         return response;
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/cars/db/{carId}", method = RequestMethod.GET)
+    public VehicleResponse<Car> getCarByDatabaseId(@PathVariable("carId") Long carId) {
+        VehicleResponse<Car> response = new VehicleResponse<Car>();
+        response.setObject(carService.getCarByDatabaseId(carId));
+        return response;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/cars/create/{model}/{manufacturer}/{price}", method = RequestMethod.GET)
+    public VehicleResponse<Long> createCar(@PathVariable("model") String model, @PathVariable("manufacturer") String manufacturer, @PathVariable("price") Double price) {
+        VehicleResponse<Long> response = new VehicleResponse<Long>();
+        response.setObject(carService.createCar(model, manufacturer, price));
+        return response;
+    }
 }

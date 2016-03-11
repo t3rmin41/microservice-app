@@ -8,6 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name="trucks")
 public class TruckJpa {
@@ -23,12 +28,14 @@ public class TruckJpa {
     @Column(name="price")
     private Double price;
 
-    @Column(name="created", insertable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name="created")
     private Date created;
 
-    @Column(name="updated", insertable = false)
+    @UpdateTimestamp
+    @Column(name="updated")
     private Date updated;
-    
+
     public Long getId() {
         return id;
     }

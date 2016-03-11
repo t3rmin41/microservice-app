@@ -33,17 +33,26 @@ repositories {
 }
 
 dependencies {
+    compile files('../vehicle-entity/build/libs/vehicle-entity-0.0.1-SNAPSHOT.jar')
+
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}") {
         exclude module: 'spring-boot-starter-tomcat'
     }
     compile("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
+    compile('org.springframework.boot:spring-boot-starter-jdbc')
     //compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
     //compile("org.springframework.cloud:spring-cloud-starter-eureka-server:1.0.3.RELEASE")
+    
+    compile("org.hibernate:hibernate-core:4.3.5.Final")
+    
+    compile('org.postgresql:postgresql:9.4.1207')
     
     compile("javax.inject:javax.inject:1")
     
     //4. Logback
     compile("ch.qos.logback:logback-classic:1.+")
+    
+    compile('junit:junit:4.12')
     
     testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }

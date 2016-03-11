@@ -55,4 +55,13 @@ public class TruckController {
         response.setObject(truckId);
         return response;
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/editTruckPrice/db/{id}/{price}", method = RequestMethod.GET)
+    public VehicleResponse<Long> editTruckPrice(@PathVariable("id") Long truckId, @PathVariable("price") Double price) {
+        VehicleResponse<Long> response = new VehicleResponse<Long>();
+        Long id = truckService.editTruck(truckId, price);
+        response.setObject(id);
+        return response;
+    }
 }

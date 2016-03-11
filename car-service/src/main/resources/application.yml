@@ -5,6 +5,8 @@ spring:
         name: car-service
     profiles:
         active: local-dev
+    datasource:
+        initialize
 #logging:
 #    level.org.springframework: OFF
 
@@ -12,6 +14,16 @@ spring:
 
 spring:
     profiles: local-dev
+    datasource:
+        url: jdbc:postgresql://localhost:5432/vehicle_db
+        username: postgres
+        password: postgres
+        driverClassName: org.postgresql.Driver
+        #initialize: true
+        #properties:
+        #    import_files: cars_dump.sql
+        #hibernate.hbm2ddl.import_files: cars_dump.sql
+        #hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
 eureka:
     instance:
         hostname: ${host.instance.name}
@@ -26,7 +38,8 @@ host:
     instance:
         name: localhost
 server:
-    port: 0
+    #port: 0
+    port: 8889
 
 ---
 

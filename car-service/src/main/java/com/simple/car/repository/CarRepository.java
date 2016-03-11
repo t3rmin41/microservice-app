@@ -14,7 +14,7 @@ public class CarRepository {
 
     private Map <Long, Car> cars = new HashMap<Long, Car>();
     
-    private CarRepository() {
+    public CarRepository() {
         cars.put(1L, new Car(){
             {
                 setId(1L);
