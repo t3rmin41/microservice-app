@@ -21,6 +21,9 @@ public class CarService {
     @Autowired
     private CarJdbcRepository carJdbcRepo;
     
+    @Autowired
+    private CarIntegrationService carIntegService;
+    
     public List<Car> getAllCars() {
         List<Car> allCars = new ArrayList<Car>();
         List<Car> inMemoryCars = carRepo.getAllCars();
@@ -44,5 +47,9 @@ public class CarService {
         car.setManufacturer(manufacturer);
         car.setPrice(price);
         return carJdbcRepo.createCar(car);
+    }
+
+    public Long createIntegrationCar(String model, String manufacturer, Double price) {
+        return carIntegService.createIntegrationCar(model, manufacturer, price);
     }
 }

@@ -51,4 +51,12 @@ public class CarController {
         response.setObject(carService.createCar(model, manufacturer, price));
         return response;
     }
+    
+    @ResponseBody
+    @RequestMapping(value = "/cars/create/integration/{model}/{manufacturer}/{price}", method = RequestMethod.GET)
+    public VehicleResponse<Long> createIntegrationCar(@PathVariable("model") String model, @PathVariable("manufacturer") String manufacturer, @PathVariable("price") Double price) {
+        VehicleResponse<Long> response = new VehicleResponse<Long>();
+        response.setObject(carService.createIntegrationCar(model, manufacturer, price));
+        return response;
+    }
 }
