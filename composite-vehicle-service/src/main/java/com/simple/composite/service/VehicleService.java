@@ -22,10 +22,10 @@ import com.simple.composite.command.VehicleCommand;
 @Component
 public class VehicleService {
     
-    private static final String remoteUrl = "http://localhost:8888/buses";
-    private static final String errorUrl = "http://localhost:8888/internalErrorUrl";
-    private static final String nonExistingUrl = "http://localhost:8888/nonExisting";
-    private static final String slowUrl = "http://localhost:8888/slowBuses";
+    private static final String remoteUrl = "http://localhost:8884/buses";
+    private static final String errorUrl = "http://localhost:8884/internalErrorUrl";
+    private static final String nonExistingUrl = "http://localhost:8884/nonExisting";
+    private static final String slowUrl = "http://localhost:8884/slowBuses";
     
     @Inject
     private TruckClient truckClient;
