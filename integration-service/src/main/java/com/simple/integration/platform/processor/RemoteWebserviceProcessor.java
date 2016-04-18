@@ -21,7 +21,7 @@ public class RemoteWebserviceProcessor implements Processor {
 
     private static Logger log = LoggerFactory.getLogger(RemoteWebserviceProcessor.class);
     
-    private static final String remoteURL = "http://localhost:7777/ws/countries.wsdl";
+    private static final String remoteURL = "http://localhost:8886/ws/cars.wsdl";
     
     @Override
     public void process(Exchange exchange) throws Exception {
@@ -39,32 +39,32 @@ public class RemoteWebserviceProcessor implements Processor {
         SOAPMessage soapMessage = messageFactory.createMessage();
         SOAPPart soapPart = soapMessage.getSOAPPart();
 
-        String serverURI = "http://spring.io/guides/gs-producing-web-service";
+        String serverURI = "http://entity.soap.simple.com/car";
 
         // SOAP Envelope
         SOAPEnvelope envelope = soapPart.getEnvelope();
-        envelope.addNamespaceDeclaration("coun", serverURI);
+        envelope.addNamespaceDeclaration("car", serverURI);
 
         //Constructed SOAP Request Message:
         /*
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:coun="http://my.soap.webservice.io/countries/countries-web-service">
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:car="http://entity.soap.simple.com/car">
         <soapenv:Header/>
             <soapenv:Body>
-                <coun:getCountryRequest>
-                    <coun:name>Spain</coun:name>
-                </coun:getCountryRequest>
+                <car:getCarRequest>
+                    <car:id>2</car:id>
+                </coun:getCarRequest>
             </soapenv:Body>
         </soapenv:Envelope>
          */
 
         // SOAP Body
         SOAPBody soapBody = envelope.getBody();
-        SOAPElement soapBodyElem = soapBody.addChildElement("getCountryRequest", "coun");
-        SOAPElement soapBodyElem1 = soapBodyElem.addChildElement("name", "coun");
-        soapBodyElem1.addTextNode("Spain");
+        SOAPElement soapBodyElem = soapBody.addChildElement("getCarRequest", "car");
+        SOAPElement soapBodyElem1 = soapBodyElem.addChildElement("id", "car");
+        soapBodyElem1.addTextNode("2");
 
         MimeHeaders headers = soapMessage.getMimeHeaders();
-        headers.addHeader("SOAPAction", serverURI  + "getCountryRequest");
+        headers.addHeader("SOAPAction", serverURI  + "getCarRequest");
 
         soapMessage.saveChanges();
 

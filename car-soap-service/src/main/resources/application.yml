@@ -1,0 +1,25 @@
+spring:
+    main:
+        show_banner: off
+    application:
+        name: car-soap-service
+    profiles:
+        active: local-dev
+
+---
+
+spring:
+    profiles: local-dev
+host:
+    instance:
+        name: localhost
+server:
+    #port: 0
+    port: 8886
+
+---
+
+spring:
+    profiles: prod
+server:
+    port: 0

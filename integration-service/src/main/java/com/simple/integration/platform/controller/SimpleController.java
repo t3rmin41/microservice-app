@@ -16,20 +16,7 @@ public class SimpleController {
 
     @Autowired
     private ConfigurableApplicationContext context;
-    
-    @RequestMapping(value = "/rs/hello", method = RequestMethod.GET)
-    public String hello() {
-        return "Hello from REST";
-    }
-    
-    @RequestMapping(value = "/queue/hello", method = RequestMethod.GET)
-    public String queueHello() {
-        JmsSender jmsSender = (JmsSender) context.getBean("jmsMqSender");
-        jmsSender.sendText("hellooooo " + new Date());
-        JmsReceiver jmsReceiver = (JmsReceiver) context.getBean("jmsMqReceiver");
-        return jmsReceiver.getMessage();
-    }
-    
+
     @RequestMapping(value = "/queue/car", method = RequestMethod.GET)
     public String queueNewCar() {
         JmsSender jmsSender = (JmsSender) context.getBean("jmsMqSender");

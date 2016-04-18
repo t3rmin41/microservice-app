@@ -1,0 +1,124 @@
+apply plugin: 'java'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+// Configuration for xjc dependencies
+configurations {
+    xjc
+    //excludes
+    runtime.exclude group: 'org.springframework.boot'
+    runtime.exclude group: 'wsdl4j'
+    runtime.exclude group: 'javax.inject'
+    runtime.exclude group: 'ch.qos.logback'
+    runtime.exclude group: 'junit'
+    //runtime.exclude module: 'storm-core'
+}
+
+dependencies {
+    xjc("com.sun.xml.bind:jaxb-impl:2.2.7")
+    xjc("com.sun.xml.bind:jaxb-xjc:2.2.7")
+    // Use the XJC taks from the JAXB2 Commons project to allow plugin use
+    xjc("org.jvnet.jaxb2_commons:jaxb2-basics-ant:0.6.3")
+    
+
+}
+
+task cleanGeneratedContract(type:Delete){
+    delete fileTree("${projectDir}/generated-sources") {
+        include '**/*.*'
+    }
+}
+
+task xsd2java() {
+    dependsOn cleanGeneratedContract
+    def xsdDir = "${projectDir}/src/main/resources/contracts/"
+    def generatedSrcDir = "${projectDir}/generated-sources/src/main/java"
+    def genSrcDirHandle = file(generatedSrcDir)
+    genSrcDirHandle.deleteDir()
+    doLast {
+        genSrcDirHandle.mkdirs()
+        ant.taskdef(name: 'xjc', classname: 'org.jvnet.jaxb2_commons.xjc.XJC2Task', classpath: configurations.xjc.asPath)
+        ant.xjc(destDir: generatedSrcDir, encoding:'UTF-8') {
+            schema(dir: xsdDir, includes: '*.xsd') 
+            arg(value:"-disableXmlSecurity")
+        }
+    }
+}
+
+task contractJavaCompile(type: JavaCompile) {
+    dependsOn xsd2java
+    source = file("${projectDir}/generated-sources/src/main/java")
+    classpath = files("${projectDir}/generated-sources/src/main/java")
+    destinationDir = file("${buildDir}/generated-sources/classes")
+    dependencyCacheDir = file("${buildDir}/generated-sources/dependency-cache")
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+task contractJar(type: Jar) {
+    dependsOn contractJavaCompile
+    baseName = 'cars-soap-contract'
+    version = '0.0.1-SNAPSHOT'
+    excludes = ["src/main/resources/contracts/**", "src/main/resources"] // from ("src/main/resources")
+    from ("${buildDir}/generated-sources/classes")
+}
+
+buildscript {
+     ext {
+          springBootVersion = '1.3.0.RELEASE'
+          hystrixVersion = '1.0.4.RELEASE'
+     }
+     repositories {
+          mavenCentral()
+     }
+     dependencies {
+          classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+     }
+}
+
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-ws:${springBootVersion}")
+
+    compile("wsdl4j:wsdl4j:1.6.1")
+
+    compile("javax.inject:javax.inject:1")
+    //3. Logback
+    compile ("ch.qos.logback:logback-classic:1.1.3")
+
+    compile files("./build/libs/cars-soap-contract-0.0.1-SNAPSHOT.jar")
+    
+    testCompile('junit:junit:4.12')
+    //testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
+
+bootRepackage {
+    mainClass = 'com.simple.soap.car.app.CarApplication'
+}
+
+compileJava {
+    dependsOn contractJar
+    source = file("${projectDir}/src/main/java")
+    //classpath = files("${projectDir}/src/main/java")
+    destinationDir = file("${buildDir}/classes")
+    dependencyCacheDir = file("${buildDir}/dependency-cache")
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+jar {
+    baseName = 'car-soap-service'
+    version = '0.0.1-SNAPSHOT'
+    //exclude ("contracts/**") from ("src/main/resources")
+    excludes = ["src/main/resources/contracts/**", "src/main/resources/*"]
+    from ("${buildDir}/classes")
+}
+
+springBoot {
+    mainClass = 'com.simple.soap.car.app.CarApplication'
+}
