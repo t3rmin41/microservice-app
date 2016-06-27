@@ -9,3 +9,4 @@ build/
 #Common
 *log/
 .springBeans
+generated*/

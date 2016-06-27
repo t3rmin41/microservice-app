@@ -1,4 +1,7 @@
 apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
 
 repositories {
     mavenLocal()
@@ -78,8 +81,6 @@ buildscript {
           classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
      }
 }
-
-apply plugin: 'spring-boot'
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
